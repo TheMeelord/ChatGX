@@ -1,0 +1,1 @@
+from src.data.config import init_db
