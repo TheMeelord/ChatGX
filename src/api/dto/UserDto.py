@@ -1,9 +1,11 @@
 from pydantic import BaseModel
 
+
 class UserRegisterRequest(BaseModel):
     username: str
     email: str
     password: str
+
 
 class UserRegisterResponse(BaseModel):
     message: str
@@ -12,5 +14,16 @@ class UserRegisterResponse(BaseModel):
 class UserLoginRequest(BaseModel):
     email: str
     password: str
+
+
 class UserLoginResponse(BaseModel):
     token: str
+
+
+class UserDtoResponse(BaseModel):
+    id: int
+    username: str
+
+
+class UserGetAllResponse(BaseModel):
+    users: list[UserDtoResponse]

@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from src.api.dto.UserDto import UserRegisterResponse, UserRegisterRequest, UserLoginResponse, UserLoginRequest
+from src.api.dto.UserDto import UserRegisterResponse, UserRegisterRequest, UserLoginResponse, UserLoginRequest, \
+    UserGetAllResponse, UserDtoResponse
 from src.data.config import get_db
 from src.data.dbo.UserDbo import UserDbo
 from src.data.repository.token_repository import token_repository
@@ -50,4 +51,24 @@ async def login_user(user: UserLoginRequest, db: Session = Depends(get_db)):
         raise e
     except Exception as e:
         print(f"Error during user login: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+@user_router.get("/get_all/{token}", response_model=UserGetAllResponse)
+async def get_all_users(token: str, db: Session = Depends(get_db)):
+    try:
+        user_repo = user_repository(db)
+        token_repo = token_repository(db)
+
+        user = await user_repo.get_user_by_token(token, token_repo)
+        if user is None:
+            raise HTTPException(status_code=401, detail="Unauthorized")
+
+        users = await user_repo.get_all_users()
+        users_send = UserGetAllResponse(users=[UserDtoResponse(id=u.id, username=u.username) for u in users])
+        return users_send
+
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        print(f"Error during fetching users: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error")
