@@ -64,7 +64,7 @@ async def get_all_users(token: str, db: Session = Depends(get_db)):
             raise HTTPException(status_code=401, detail="Unauthorized")
 
         users = await user_repo.get_all_users()
-        users_send = UserGetAllResponse(users=[UserDtoResponse(id=u.id, username=u.username) for u in users])
+        users_send = UserGetAllResponse(users=[UserDtoResponse(id=u.id, username=u.username) for u in users if u.id != user.id])
         return users_send
 
     except HTTPException as e:
