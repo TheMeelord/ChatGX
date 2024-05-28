@@ -30,3 +30,9 @@ class user_repository:
 
     async def get_all_users(self):
         return self.db.query(UserDbo).all()
+
+    async def get_username_by_id(self, user_id):
+        user = self.db.query(UserDbo).filter(UserDbo.id == user_id).first()
+        if user:
+            return user.username
+        return None

@@ -32,3 +32,12 @@ class chat_repository:
 
     async def get_all_chats_by_user_id(self, user_id):
         return self.db.query(ChatDbo).filter((ChatDbo.user1_id == user_id) | (ChatDbo.user2_id == user_id)).all()
+
+    async def is_chat_between_users_exist(self, user1_id, user2_id):
+        chat = self.db.query(ChatDbo).filter(((ChatDbo.user1_id == user1_id) & (ChatDbo.user2_id == user2_id)) | ((ChatDbo.user1_id == user2_id) & (ChatDbo.user2_id == user1_id))).first()
+        if chat:
+            return True
+        return False
+
+    async def get_chat_by_id(self, chat_id):
+        return self.db.query(ChatDbo).filter(ChatDbo.id == chat_id).first()
