@@ -1,0 +1,74 @@
+/* styles.css */
+
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  .container-fluid {
+    height: calc(100% - 56px); /* 56px - высота header */
+    overflow: hidden; /* чтобы предотвратить появление полосы прокрутки */
+  }
+  
+  header {
+    height: 56px; /* Установим фиксированную высоту header */
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+}
+  
+  header h2 {
+    margin: 0;
+    font-size: 20px;
+  }
+  
+  header p {
+    margin-top: 0;
+    font-size: 14px;
+  }
+  
+  header button {
+    font-size: 14px;
+  }
+  
+  .chat-container {
+    display: flex;
+    height: calc(100% - 56px); /* 56px - высота header */
+  }
+  
+  .friend-list {
+    width: 250px;
+    border-right: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+  
+  .chat {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto; /* Добавляет полосу прокрутки при необходимости */
+  }
+  
+  .friend {
+    padding: 10px 0;
+    cursor: pointer;
+  }
+  
+  .friend:hover {
+    background-color: #e9ecef;
+  }
+  
+  .unread-messages {
+    color: #007bff;
+  }
+  
+  @media (max-width: 768px) {
+    .friend-list {
+      display: none; /* Скрывает список друзей на мобильных устройствах */
+    }
+  
+    .chat {
+      width: 100%; /* Занимает всю доступную ширину на мобильных устройствах */
+    }
+  }
+  
