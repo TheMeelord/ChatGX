@@ -89,16 +89,17 @@ function login(email, password) {
   };
 
   // Отправка AJAX-запроса
-  $.ajax({
+ $.ajax({
     type: "POST",
     url: "http://127.0.0.1:5000/user/login",
     data: JSON.stringify(requestData),
     contentType: "application/json",
     success: function(response) {
       // Обработка успешного ответа от сервера
-      if (response.token) {
+      if (response.token && response.user_id) {
         // Сохранение токена в куки
         document.cookie = `token=${response.token}; path=/`;
+        document.cookie = `user_id=${response.user_id}; path=/`;
         // Перенаправление на страницу messenger.html
         window.location.href = "messenger.html";
       } else {

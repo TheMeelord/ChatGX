@@ -10,6 +10,8 @@ for (let i = 0; i < cookies.length; i++) {
 return null;
 }
 
+var CHAT_ID = null;
+
 const baseUrl = "ws://127.0.0.1:5000/ws/connect/";
 
 let socket;
@@ -25,6 +27,16 @@ socket.onopen = function(event) {
 
 socket.onmessage = function(event) {
     console.log("Получено сообщение:", event.data);
+    if(message.includes("new message")){
+      const message = event.data.split(" ");
+      let chat_id = parseInt(message[0]);
+      console.log(chat_id);
+      if (chat_id == CHAT_ID){
+        loadChat(chat_id);
+      }
+
+      return;
+    }
     const message = event.data.split(" ");
     const friend_id = parseInt(message[0]);
     const status = message[1];
@@ -137,3 +149,67 @@ $(document).ready(function() {
         });
     });
 });
+
+function loadChat(chat_id) {
+  const token = getCookie('token');
+  const user_id = getCookie('user_id');
+  CHAT_ID = chat_id;
+  fetch(`http://127.0.0.1:5000/chat/history/${token}/${chat_id}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Chat not found');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      // Обработка полученных данных чата
+      const chatContainer = document.getElementById('chat');
+      chatContainer.innerHTML = ''; // Очистить содержимое чата перед загрузкой новых данных
+      data.messages.forEach(message => {
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message.text;
+        messageElement.classList.add('message-container');
+        if (message.sender_id!=user_id){
+            messageElement.classList.add('sender-message');
+        }
+        else{
+            messageElement.classList.add('receiver-message')
+        }
+        chatContainer.appendChild(messageElement);
+      });
+    })
+    .catch(error => {
+      alert("Ошибка: " + error.message);
+    });
+}
+
+function sendMessage(){
+  const token = getCookie('token');
+
+  fetch("http://127.0.0.1:5000/chat/send", {
+    method: 'POST',
+    headers: {
+      'Content-Type' : 'application/json'
+    },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      token: token,
+      text: document.getElementById('inputText').value
+    })
+}).then(response => {
+  if (!response.ok) {
+    throw new Error('Chat not found');
+  }
+  return response.json();
+})
+.then(data => {console.log(data)})
+const chatContainer = document.getElementById('chat');
+const messageElement = document.createElement('div');
+        messageElement.textContent = document.getElementById('inputText').value;
+        messageElement.classList.add('message-container');
+        chatContainer.appendChild(messageElement);
+        document.getElementById('inputText').value = '';
+
+}
+

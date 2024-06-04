@@ -4,7 +4,7 @@ let friends = [
     { id: 2, username: "Пользователь2", unread_messages: 0, status: "Офлайн" },
     // Добавьте дополнительных друзей при необходимости
   ];
-  
+
   // Функция для добавления друга в список чата
 function addFriendToChatList(chat_id, friend_id, friend_username, unread_messages, status) {
     const friendList = document.getElementById("friendList");
@@ -32,10 +32,12 @@ function updateFriendStatus(friend_id, new_status) {
         friendDiv.querySelector("small").innerText = new_status;
     }
 }
-  
+
+
   // Функция загрузки чата (пока заглушка)
-  function loadChat(chat_id) {
+  /*function loadChat(chat_id) {
     alert("Загрузка чата с ID: " + chat_id);
-  }
+  }*/
+
 
   

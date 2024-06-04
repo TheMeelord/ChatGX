@@ -44,7 +44,7 @@ async def login_user(user: UserLoginRequest, db: Session = Depends(get_db)):
         token = await token_repo.get_token(user_db.id)
         if token is None:
             token = await token_repo.create_token(user_db.id)
-        return UserLoginResponse(token=token.token)
+        return UserLoginResponse(token=token.token,user_id=user_db.id)
 
 
     except HTTPException as e:

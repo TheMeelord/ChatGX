@@ -18,7 +18,7 @@ class UserLoginRequest(BaseModel):
 
 class UserLoginResponse(BaseModel):
     token: str
-
+    user_id: int
 
 class UserDtoResponse(BaseModel):
     id: int
