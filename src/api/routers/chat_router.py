@@ -88,6 +88,7 @@ async def send_message(message: ChatSendMessageRequest, db: Session = Depends(ge
     user = await user_repo.get_user_by_token(message.token, token_repo)
     if user:
         await chat_repo.save_message(message.chat_id, user.id, message.text)
+        await DATA_STORAGE.notify_message(message.chat_id, user.id, chat_repo)
         return ChatSendMessageResponse(message="Message sent")
     else:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")

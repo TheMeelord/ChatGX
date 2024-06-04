@@ -30,9 +30,10 @@ async def websocket_endpoint(websocket: WebSocket, token: str, db: Session = Dep
             while True:
                 data = await websocket.receive_text()
                 data_dict = json.loads(data)
-                message = NotifyMessageWS(**data_dict)
-
-                await DATA_STORAGE.notify_message(message.chat_id, user.id, chat_repo)
+                # message = NotifyMessageWS(**data_dict)
+                # print(message.chat_id, user.id)
+                #
+                # await DATA_STORAGE.notify_message(message.chat_id, user.id, chat_repo)
         except WebSocketDisconnect:
             print(f"User {user.username} disconnected")
             await DATA_STORAGE.disconnect(user.id, websocket)
