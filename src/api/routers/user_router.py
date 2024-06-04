@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from src.api.dto.UserDto import UserRegisterResponse, UserRegisterRequest, UserLoginResponse, UserLoginRequest, \
-    UserGetAllResponse, UserDtoResponse
+    UserGetAllResponse, UserDtoResponse, UserVerifyResponse
 from src.data.config import get_db
 from src.data.dbo.UserDbo import UserDbo
 from src.data.repository.token_repository import token_repository
@@ -51,6 +51,24 @@ async def login_user(user: UserLoginRequest, db: Session = Depends(get_db)):
         raise e
     except Exception as e:
         print(f"Error during user login: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+@user_router.get("/verify/{token}", response_model=UserVerifyResponse)
+async def verify_user(token: str, db: Session = Depends(get_db)):
+    try:
+        user_repo = user_repository(db)
+        token_repo = token_repository(db)
+
+        user = await user_repo.get_user_by_token(token, token_repo)
+        if user is None:
+            raise HTTPException(status_code=401, detail="Unauthorized")
+
+        return UserVerifyResponse(verified=True)
+
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        print(f"Error during user verification: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error")
 
 @user_router.get("/get_all/{token}", response_model=UserGetAllResponse)

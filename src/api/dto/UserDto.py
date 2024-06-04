@@ -27,3 +27,6 @@ class UserDtoResponse(BaseModel):
 
 class UserGetAllResponse(BaseModel):
     users: list[UserDtoResponse]
+
+class UserVerifyResponse(BaseModel):
+    verified: bool
