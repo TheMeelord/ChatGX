@@ -7,19 +7,26 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <header>
-        <div class="row align-items-center justify-content-between">
-          <div class="col-md-6">
-            <h2>ChatGX</h2>
-          </div>
-          <div class="col-md-6 text-right">
-            <button type="button" class="btn btn-primary" id="openCreateChatModalBtn" data-toggle="modal" data-target="#createChatModal">Создать чат</button>
-          </div>
-        </div>
-      </header>
+<header>
   <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <h2 class="float-left">ChatGX</h2>
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-primary float-right" id="openCreateChatModalBtn" data-toggle="modal" data-target="#createChatModal">Создать чат</button>
+      </div>
+    </div>
+  </div>
+</header>
 
+  
+  
+  
+  
+  
+      
+  <div class="container-fluid">
     <div class="row chat-container">
       <div class="col-md-3 friend-list" id="friendList">
         <!-- Список друзей будет добавлен сюда -->
