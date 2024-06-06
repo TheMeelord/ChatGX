@@ -12,7 +12,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <h2 class="float-left">ChatGX</h2>
+        <h2 class="float-left"><b>ChatGX</b></h2>
       </div>
       <div class="col">
         <button type="button" class="btn btn-primary float-right" id="openCreateChatModalBtn" data-toggle="modal" data-target="#createChatModal">Создать чат</button>
@@ -31,7 +31,7 @@
         <div id="chat"></div> 
          <div class="winchat-container">
            <div class="input-container" style="display: flex; align-items: center;">
-            <input type="text" class="form-control" id="inputText" placeholder="Введите текст" style="flex: 1;">
+            <input type="text" class="form-control" id="inputText" placeholder="Введите текст" style="flex: 1;" onkeypress="handleKeyPress(event)">
              <button type="button" class="btn btn-primary" onclick="sendMessage()" style="margin-left: 10px;">Отправить</button>
            </div>
          </div>

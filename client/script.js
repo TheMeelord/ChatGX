@@ -173,6 +173,11 @@ function loadChat(chat_id) {
     document.cookie = `activeChatId=${chat_id}; path=/`;
 }
 
+function handleKeyPress(event) {
+    if (event.keyCode === 13) {
+        sendMessage();
+    }
+}
 
 function sendMessage() {
     const token = getCookie('token');
