@@ -6,6 +6,12 @@ function updateFriendStatus(friend_id, new_status) {
   }
 }
 
+function exChat(){
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/";
+    document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/";
+    location.reload();
+}
+
 function addFriendToChatList(chat_id, friend_id, friend_username, unread_messages, status) {
   const friendList = document.getElementById("friendList");
   const friendDiv = document.createElement("a");

@@ -119,6 +119,8 @@ $(document).ready(function() {
         }
     });
 
+
+
     $('#userList').on('click', 'li', function() {
         const userId = $(this).data('user-id');
         const token = getCookie('token');
@@ -138,6 +140,7 @@ $(document).ready(function() {
                 console.error("Ошибка при создании чата:", error);
             }
         });
+        location.reload();
     });
 });
 
